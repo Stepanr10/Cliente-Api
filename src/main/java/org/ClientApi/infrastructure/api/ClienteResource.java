@@ -8,11 +8,14 @@ import jakarta.ws.rs.core.Response;
 import org.ClientApi.DTOs.*;
 import org.ClientApi.domain.models.Client;
 import org.ClientApi.application.services.ClientService;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import java.net.URI;
 import java.util.List;
 
 @Path("/clientes")
+@Tag(name = "Clientes", description = "Con este Api se busca gestionar un CRUD de clientes utilizando una base de datos SQLlite. ")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ClienteResource {
@@ -20,7 +23,11 @@ public class ClienteResource {
     @Inject
     ClientService service;
 
+    /* Se agregan anotaciones y detalles a cada operación para mostrar claridad
+     *  y al ejecutar en swagger se visualice el objetivo de cada endpoint.*/
+
     @POST
+    @Operation(summary = "Crear un cliente.")
     public Response create(ClientCreateDTO client) {
         try {
             Client cliente = service.create(client);
@@ -36,6 +43,7 @@ public class ClienteResource {
     }
 
     @GET
+    @Operation(summary = "Obtener todos los clientes.")
     public Response getAll() {
         try {
             List<Client> result = service.findAll();
@@ -51,6 +59,7 @@ public class ClienteResource {
 
     @GET
     @Path("/pais/{codigo}")
+    @Operation(summary = "Obtener un cliente según el país.")
     public Response getByCountry(@PathParam("codigo") String codigo) {
         try {
             List<Client> result = service.findByCountry(codigo);
@@ -65,6 +74,7 @@ public class ClienteResource {
 
     @GET
     @Path("/{id}")
+    @Operation(summary = "Obtener un cliente según su ID en la base de datos.")
     public Response getById(@PathParam("id") Long id) {
         try {
             Client found = service.findById(id);
@@ -77,6 +87,7 @@ public class ClienteResource {
 
     @PUT
     @Path("/{id}")
+    @Operation(summary = "Actualizar datos de un cliente filtrandolo por su ID. (telefono, correo, dirección, pais")
     public Response update(@PathParam("id") Long id, ClientUpdateDTO update) {
         try {
             ClientResponseDTO updated = service.update(id, update);
@@ -92,6 +103,7 @@ public class ClienteResource {
 
     @DELETE
     @Path("/{id}")
+    @Operation(summary = "Eliminar un cliente buscandolo por su ID.")
     public Response delete(@PathParam("id") Long id) {
         try {
             Client found = service.findById(id);

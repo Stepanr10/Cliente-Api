@@ -28,7 +28,7 @@ public class RestCountryService {
             // Cuando la respuesta sea diferente a 200
             if (response.statusCode() != 200) {
                 System.err.println("Error de API RestCountryService: status=" + response.statusCode() + ", body=" + response.body());
-                return "Error: status=" + response.statusCode();
+                return "Error: status=" + response.statusCode(); 
             }
 
             JsonReader reader = Json.createReader(new StringReader(response.body()));

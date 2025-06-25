@@ -23,6 +23,8 @@ public class ClientService {
     @Inject
     RestCountryService countryService;
 
+    /*Para la creación de clientes se utilizó un DTO que muestra todos los campos de la clase Client excepto el
+     * id y genticilio ya que estos son autogenerados a través del codigo.*/
     @Transactional
     public Client create(ClientCreateDTO clientCreateDTO) {
         ClientValidation.validate(clientCreateDTO);
@@ -44,6 +46,7 @@ public class ClientService {
         return repository.findByCountry(pais);
     }
 
+    //Se utiliza ClientUpdateDTO como entrada para mostrar solo los campos que se quieren actualizar.
     @Transactional
     public ClientResponseDTO update(Long id, ClientUpdateDTO update) {
         Client existing = findById(id);
