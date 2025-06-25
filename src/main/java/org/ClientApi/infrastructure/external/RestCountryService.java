@@ -21,7 +21,7 @@ public class RestCountryService {
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://restcountries.com/v3.1/alpha/" + isoCode)).GET().build();
 
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            /*En caso de retornar vacio*/
+            /*Cuando el response sea diferente a 200*/
             if (response.statusCode() != 200) {
                 return "Desconocido";
             }
