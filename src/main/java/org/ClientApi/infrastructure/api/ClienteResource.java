@@ -99,7 +99,7 @@ public class ClienteResource {
                 return Response.status(Response.Status.NOT_FOUND).entity(new BaseEntity.ErrorDTO("No se encontró un cliente para eliminar con este id: " + id)).build();
             }
             service.delete(id);
-            return Response.noContent().build(); // 204
+            return Response.ok("Cliente eliminado").build();
         } catch (Throwable t) {
             return serverError(t.getMessage());
         }
