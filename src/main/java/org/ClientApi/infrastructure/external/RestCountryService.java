@@ -21,7 +21,10 @@ public class RestCountryService {
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://restcountries.com/v3.1/alpha/" + isoCode)).GET().build();
 
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-
+            /*En caso de retornar vacio*/
+            if (response.statusCode() != 200) {
+                return "Desconocido";
+            }
             JsonReader reader = Json.createReader(new StringReader(response.body()));
             JsonArray array = reader.readArray();
             JsonObject country = array.getJsonObject(0);

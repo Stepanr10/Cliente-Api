@@ -21,9 +21,13 @@ public class ClienteResource {
     ClientService service;
 
     @POST
+    /*Creando un cliente nuevo*/
     public Response create(ClientCreateDTO client) {
         try {
             Client cliente = service.create(client);
+            if (client == null) {
+                return badRequest("El cuerpo de la solicitud está vacío");
+            }
             URI uri = URI.create("/clientes/" + cliente.id);
             return Response.created(uri).entity(cliente).build();
         } catch (IllegalArgumentException e) {
@@ -36,6 +40,7 @@ public class ClienteResource {
     }
 
     @GET
+    /*Obtener Todos los clientes*/
     public Response getAll() {
         try {
             List<Client> result = service.findAll();
@@ -50,20 +55,22 @@ public class ClienteResource {
 
 
     @GET
+    /*Clientes según el país*/
     @Path("/pais/{codigo}")
     public Response getByCountry(@PathParam("codigo") String codigo) {
         try {
             List<Client> result = service.findByCountry(codigo);
             if (result == null || result.isEmpty()) {
-                return Response.noContent().build(); // 204
+                return Response.noContent().build();
             }
-            return Response.ok(service.findByCountry(codigo)).build();
+            return Response.ok(result).build();
         } catch (Throwable t) {
             return serverError(t.getMessage());
         }
     }
 
     @GET
+    /*Clientes por Identificador.*/
     @Path("/{id}")
     public Response getById(@PathParam("id") Long id) {
         try {
@@ -76,6 +83,7 @@ public class ClienteResource {
     }
 
     @PUT
+    /*Actualizando clientes (campos permitidos)*/
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, ClientUpdateDTO update) {
         try {
@@ -91,6 +99,7 @@ public class ClienteResource {
     }
 
     @DELETE
+    /*Eliminando un cliente.*/
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
         try {
