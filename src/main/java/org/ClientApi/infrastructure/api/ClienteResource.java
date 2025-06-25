@@ -4,7 +4,9 @@ import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
+import org.ClientApi.DTOs.*;
 import org.ClientApi.DTOs.*;
 import org.ClientApi.domain.models.Client;
 import org.ClientApi.application.services.ClientService;
@@ -111,7 +113,10 @@ public class ClienteResource {
                 return Response.status(Response.Status.NOT_FOUND).entity(new BaseEntity.ErrorDTO("No se encontró un cliente para eliminar con este id: " + id)).build();
             }
             service.delete(id);
-            return Response.ok("Cliente eliminado").build();
+            MensajeDTO mensaje = new MensajeDTO();
+            mensaje.setMensaje("Cliente eliminado");
+            return Response.ok(mensaje).build();
+
         } catch (Throwable t) {
             return serverError(t.getMessage());
         }

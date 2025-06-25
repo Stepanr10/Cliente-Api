@@ -6,3 +6,4 @@ public class ClientUpdateDTO {
     public String telefono;
     public String pais;
 }
+
