@@ -24,10 +24,10 @@ public class ClienteResource {
     /*Creando un cliente nuevo*/
     public Response create(ClientCreateDTO client) {
         try {
-            Client cliente = service.create(client);
             if (client == null) {
                 return badRequest("El cuerpo de la solicitud está vacío");
             }
+            Client cliente = service.create(client);
             URI uri = URI.create("/clientes/" + cliente.id);
             return Response.created(uri).entity(cliente).build();
         } catch (IllegalArgumentException e) {
